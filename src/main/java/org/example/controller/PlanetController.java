@@ -4,9 +4,8 @@ package org.example.controller;
 import org.example.entity.Planet;
 import org.example.service.PlanetService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class PlanetController {
     public List<Planet> getPlanetList() {
         return planetService.getPlanetList();
     }
- /*
+
     //CRUD -> READ
     @GetMapping(params = "planetName")
     public Planet getPlanetByName(@RequestParam String planetName) {
@@ -38,9 +37,12 @@ public class PlanetController {
 
     //CRUD -> CREATE
     @PostMapping()
-    public Planet createNewPlanet(@RequestBody Planet planet) {
-        planetService.savePlanet(planet);
-        return planetService.getPlanetByName(planet.getName());
+    public ResponseEntity<Planet> createNewPlanet(@RequestBody Planet planet) {
+        Planet savedPlanet = planetService.savePlanet(planet);
+        ResponseEntity<Planet> responseEntity = savedPlanet!=null ?
+                ResponseEntity.ok(planetService.getPlanetByName(planet.getName())) :
+                ResponseEntity.status(400).body(new Planet());
+        return responseEntity;
     }
 
     //CRUD -> UPDATE
@@ -52,9 +54,7 @@ public class PlanetController {
 
     //CRUD -> DELETE
     @DeleteMapping("/{planetName}")
-    public Planet deletePlanetByName(@PathVariable String planetName){
+    public Planet deletePlanetByName(@PathVariable String planetName) {
         return planetService.deletePlanetByName(planetName);
     }
-}
-*/
 }

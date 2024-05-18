@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface PlanetService {
     List<Planet> getPlanetList();
-//    Planet getPlanetByName(String name);
-//    void savePlanet(Planet planet);
-//    void updatePlanet(Planet planet);
-//    Planet deletePlanetByName(String planetName);
+    Planet getPlanetByName(String name);
+    Planet savePlanet(Planet planet);
+    void updatePlanet(Planet planet);
+    Planet deletePlanetByName(String planetName);
 }

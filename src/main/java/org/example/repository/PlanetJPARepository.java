@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PlanetJPARepository extends
-        JpaRepository<Planet, String>,
-        PlanetRepository {
+        JpaRepository<Planet, String> {
+    Planet getPlanetByName(String name);
 }
