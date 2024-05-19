@@ -2,8 +2,6 @@ package org.example.service.impl;
 
 import org.example.entity.Planet;
 import org.example.repository.PlanetJPARepository;
-import org.example.repository.PlanetRepository;
-import org.example.repository.jdbcimpl.PlanetRepositoryJDBCImpl;
 import org.example.service.PlanetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +10,10 @@ import java.util.List;
 
 @Service
 public class PlanetServiceImpl implements PlanetService {
-//    @Autowired
-//    private PlanetJPARepository planetRepository;
-//
-    private PlanetRepository planetRepository = new PlanetRepositoryJDBCImpl();
+    @Autowired
+    private PlanetJPARepository planetRepository;
+
+//    private PlanetRepository planetRepository = new PlanetRepositoryJDBCImpl();
 
     @Override
     public List<Planet> getPlanetList() {
@@ -24,7 +22,8 @@ public class PlanetServiceImpl implements PlanetService {
 
     @Override
     public Planet getPlanetByName(String name) {
-        return planetRepository.getPlanetByName(name);
+        return planetRepository.findById(name)
+                .orElse(new Planet());
     }
 
     @Override
@@ -44,6 +43,27 @@ public class PlanetServiceImpl implements PlanetService {
             planetRepository.delete(planetByName);
         }
         return planetByName;
+    }
+
+    public List<Planet> getPlanetsWithTempHigher(int temp) {
+        List<Planet> all = planetRepository.findAll();
+        return all.stream()
+                .filter(planet -> planet.getTemperature() > temp)
+                .toList();
+    }
+
+    @Override
+    public Planet getPlanetBySatelliteName(String satelliteName) {
+//        List<Planet> all = planetRepository.findAll();
+//        return all.stream()
+//                .filter(planet ->
+//                planet.getSatellites()
+//                        .stream()
+//                        .filter(satellite ->
+//                                satelliteName.equals(satellite.getSatelliteName()))
+//                        .toList().size() > 0
+//        ).findFirst().get();
+        return planetRepository.getPlanetBySatellitesSatelliteName(satelliteName);
     }
 }
 

@@ -57,4 +57,14 @@ public class PlanetController {
     public Planet deletePlanetByName(@PathVariable String planetName) {
         return planetService.deletePlanetByName(planetName);
     }
+
+    @GetMapping(params = "watchType")
+    public List<Planet> getPlanetByTemp(@RequestParam Integer temp) {
+        return planetService.getPlanetsWithTempHigher(temp);
+    }
+
+//    @GetMapping(params = "satellite")
+//    public Planet getPlanetBySatelliteName(@RequestParam String satellite) {
+//        return planetService.getPlanetBySatelliteName(satellite);
+//    }
 }

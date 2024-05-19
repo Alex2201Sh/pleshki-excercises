@@ -10,4 +10,6 @@ public interface PlanetService {
     Planet savePlanet(Planet planet);
     void updatePlanet(Planet planet);
     Planet deletePlanetByName(String planetName);
+    List<Planet> getPlanetsWithTempHigher(int temp);
+    Planet getPlanetBySatelliteName(String satelliteName);
 }
